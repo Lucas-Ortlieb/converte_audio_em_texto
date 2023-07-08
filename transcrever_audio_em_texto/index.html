@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Transformando em texto</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Conversor de audio para texto</h1>
+  </div>
+
+  <div class="content">
+    <div class="title">Converta</div>
+    <div class="subtitle">Carregue o áudio para transformar em texto.</div>
+
+    <div class="form-container">
+      <!--após executar o comando "python server.py" via terminal dentro do diretório em que esta esta pasta, coloque em action sua URL para conectar com o servidor-->
+      <form action="/transcribe" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="audio" class="form-label">Áudio:</label>
+          <input type="file" id="audio" name="audio" class="form-input">
+        </div>
+
+        <button type="submit" class="form-button">Gerar texto</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

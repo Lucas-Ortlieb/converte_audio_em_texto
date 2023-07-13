@@ -10,6 +10,8 @@ app = Flask(__name__)
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
     # Obtendo os dados do formulário
+    nome = request.form['nome']
+    data = request.form['date']
     audio_file = request.files['audio']
 
     # Salvar o arquivo de áudio no servidor
@@ -44,8 +46,37 @@ def transcribe():
     # Enviar o arquivo .txt como resposta para download
     return send_file(output_file, as_attachment=True)
 
+
+def verificar_palavras():
+    palavras = ['palavra1', 'palavra2', 'palavra3', 'palavra4', 'e-palavra5']
+    arquivo = "texto_transcrito.txt"
+
+    with open(arquivo, 'r') as file:
+        texto = file.read()
+        
+        palavras_encontradas = [palavra for palavra in palavras if palavra.lower() in texto.lower()]
+
+        return palavras_encontradas
+    
+
+@app.route('/verificar', methods=['GET'])
+def verificar():
+    # Executar a função de verificação de palavras
+    palavras_encontradas = verificar_palavras()
+
+    # Gerar o arquivo contendo as palavras encontradas em novas linhas
+    nome_arquivo = 'palavras_encontradas.txt'
+    with open(nome_arquivo, 'w') as file:
+        for palavra in palavras_encontradas:
+            file.write(palavra + '\n')
+
+    print(f'Arquivo {nome_arquivo} gerado com sucesso.')
+
+    # Enviar o arquivo .txt como resposta para download
+    return send_file(nome_arquivo, as_attachment=True)
+
+
 if __name__ == '__main__':
     app.run()
-
 
 
